@@ -6,6 +6,7 @@
 // Configuration for Solr
 const SOLR_CONFIG = {
     // Default Solr server URL - Update this to your Solr instance
+    // NOTE: Use HTTPS in production to secure search queries and results
     baseUrl: 'http://localhost:8983/solr',
     // Default core name - Update this to your core name
     core: 'nutch',
@@ -34,13 +35,20 @@ async function searchFera(query, start = 0) {
         const solrUrl = buildSolrUrl(query, start);
         console.log('Fetching results from:', solrUrl);
 
+        // Create abort controller for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
         // Make GET request to Solr using fetch API
         const response = await fetch(solrUrl, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-            }
+            },
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         // Check if request was successful
         if (!response.ok) {
@@ -56,7 +64,13 @@ async function searchFera(query, start = 0) {
 
     } catch (error) {
         console.error('Error fetching search results:', error);
-        displayError(error);
+        
+        // Handle timeout errors specifically
+        if (error.name === 'AbortError') {
+            displayError(new Error('Request timed out. The server is taking too long to respond.'));
+        } else {
+            displayError(error);
+        }
     }
 }
 
@@ -75,7 +89,7 @@ function buildSolrUrl(query, start) {
         // Additional useful parameters
         'q.op': 'OR',
         'defType': 'edismax',
-        'qf': 'content title',
+        'qf': 'title^5 content^1',
         'fl': 'id,title,url,content,tstamp'
     });
 
@@ -260,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Logo click - refresh page
     const logo = document.querySelector('.logo');
     logo.addEventListener('click', function() {
-        window.location.href = window.location.pathname;
+        window.location.reload();
     });
 
     console.log('Fera-Search initialized');
