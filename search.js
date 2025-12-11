@@ -178,6 +178,17 @@ function createResultItem(doc, index) {
 }
 
 /**
+ * Escape HTML special characters to prevent XSS
+ * @param {string} text - Text to escape
+ * @returns {string} Escaped text
+ */
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
  * Extract and truncate snippet from content
  * @param {string} content - Full content text
  * @returns {string} Truncated snippet
@@ -189,8 +200,10 @@ function extractSnippet(content) {
         return 'No description available.';
     }
 
-    // Remove HTML tags if present
-    const text = content.replace(/<[^>]*>/g, '');
+    // Create temporary div to strip HTML tags safely
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const text = div.textContent || div.innerText || '';
     
     // Truncate and add ellipsis
     if (text.length > maxLength) {
