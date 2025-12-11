@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fera-Search - Search Engine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Fera-Search</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search Bar Section -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="Search the web..."
+                        autocomplete="off"
+                    >
+                    <button id="search-button" class="search-button">Search</button>
+                </div>
+            </div>
+
+            <!-- Search Results Container -->
+            <div id="results-container" class="results-container">
+                <!-- Placeholder Results -->
+                <div class="result-item">
+                    <h3 class="result-title">
+                        <a href="#" class="result-link">Welcome to Fera-Search</a>
+                    </h3>
+                    <p class="result-url">https://example.com/welcome</p>
+                    <p class="result-snippet">
+                        Fera-Search is a powerful search engine built with Apache Solr and Apache Nutch. 
+                        Enter your search query above to find relevant results from our indexed content.
+                    </p>
+                </div>
+
+                <div class="result-item">
+                    <h3 class="result-title">
+                        <a href="#" class="result-link">Getting Started with Search</a>
+                    </h3>
+                    <p class="result-url">https://example.com/getting-started</p>
+                    <p class="result-snippet">
+                        Learn how to use Fera-Search effectively. Simply type your query in the search bar 
+                        and press the Search button or hit Enter to get instant results.
+                    </p>
+                </div>
+
+                <div class="result-item">
+                    <h3 class="result-title">
+                        <a href="#" class="result-link">Advanced Search Features</a>
+                    </h3>
+                    <p class="result-url">https://example.com/advanced-features</p>
+                    <p class="result-snippet">
+                        Discover advanced search capabilities powered by Apache Solr. Use operators and 
+                        filters to refine your search results and find exactly what you're looking for.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Fera-Search. Powered by Apache Solr &amp; Apache Nutch.</p>
+        </div>
+    </footer>
+
+    <script src="search.js"></script>
+</body>
+</html>
